@@ -1,0 +1,147 @@
+﻿<Window x:Class="MedHelp.Views.PersonalAccountWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MedHelp — Личный кабинет"
+        Height="750" Width="1000"
+        MinHeight="600" MinWidth="800"
+        WindowStartupLocation="CenterScreen"
+        UseLayoutRounding="True"
+        FontFamily="Segoe UI"
+        ResizeMode="CanResizeWithGrip">
+    <Window.InputBindings>
+        <KeyBinding Key="S" Modifiers="Control" Command="{Binding ExportCommand}"/>
+        <KeyBinding Key="Escape" Command="{Binding CloseCommand}"/>
+    </Window.InputBindings>
+    <DockPanel Margin="15" LastChildFill="True">
+        <TextBlock Text="Личный кабинет пользователя" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" DockPanel.Dock="Top" Margin="0,0,0,15"/>
+        <StackPanel DockPanel.Dock="Top" Margin="0,0,0,15">
+            <Grid Margin="0,2">
+                <Border BorderBrush="Gray" BorderThickness="1" Padding="8" CornerRadius="4">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="ФИО:" FontWeight="SemiBold"/>
+                        <TextBlock x:Name="lblFullName" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0" TextWrapping="Wrap" ToolTip="Ваше полное имя"/>
+                    </Grid>
+                </Border>
+            </Grid>
+            <Grid Margin="0,2">
+                <Border BorderBrush="Gray" BorderThickness="1" Padding="8" CornerRadius="4">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Логин:" FontWeight="SemiBold"/>
+                        <TextBlock x:Name="lblLogin" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0" ToolTip="Ваш логин для входа"/>
+                    </Grid>
+                </Border>
+            </Grid>
+            <Grid Margin="0,2">
+                <Border BorderBrush="Gray" BorderThickness="1" Padding="8" CornerRadius="4">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Роль:" FontWeight="SemiBold"/>
+                        <TextBlock x:Name="lblRole" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0" ToolTip="Ваша роль в системе"/>
+                    </Grid>
+                </Border>
+            </Grid>
+            <Grid Margin="0,2">
+                <Border BorderBrush="Gray" BorderThickness="1" Padding="8" CornerRadius="4">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Адрес:" FontWeight="SemiBold"/>
+                        <TextBlock x:Name="lblAddress" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0" TextWrapping="Wrap" ToolTip="Ваш адрес проживания"/>
+                    </Grid>
+                </Border>
+            </Grid>
+            <Grid Margin="0,2">
+                <Border BorderBrush="Gray" BorderThickness="1" Padding="8" CornerRadius="4">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Телефон:" FontWeight="SemiBold"/>
+                        <TextBlock x:Name="lblPhone" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0" ToolTip="Ваш контактный телефон"/>
+                    </Grid>
+                </Border>
+            </Grid>
+        </StackPanel>
+        <Grid DockPanel.Dock="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <GroupBox Grid.Row="0" Header="Мои записи на приём" Padding="5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <DataGrid Grid.Row="0" x:Name="dgMyAppointments" AutoGenerateColumns="False" IsReadOnly="True" GridLinesVisibility="All" BorderBrush="Gray" CanUserAddRows="False" RowHeight="30" FontSize="12" CanUserSortColumns="True" ToolTip="Список ваших активных записей. Сортировка по клику на заголовок.">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Врач" Binding="{Binding DoctorName}" Width="*"/>
+                            <DataGridTextColumn Header="Специальность" Binding="{Binding Specialty}" Width="120"/>
+                            <DataGridTextColumn Header="Дата" Binding="{Binding VisitDate, StringFormat='dd.MM.yyyy HH:mm'}" Width="*"/>
+                            <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="*"/>
+                            <DataGridTemplateColumn Header="Действия" Width="160">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <Button Content="Отменить" Width="70" Margin="2" Tag="{Binding AppointmentId}" Click="BtnCancelAppointment_Click" ToolTip="Отменить запись"/>
+                                            <Button Content="Печать" Width="70" Margin="2" Tag="{Binding AppointmentId}" Click="BtnPrintTicket_Click" ToolTip="Распечатать талон"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0">
+                        <Button x:Name="btnShowAppointmentsArchive" Content="📂 Архив талонов" Width="130" Height="32" Margin="15,0,5,0" Click="BtnShowAppointmentsArchive_Click" FontSize="13" Cursor="Hand" ToolTip="Просмотреть архив записей"/>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+            <GroupBox Grid.Row="2" Header="Вызовы на дом" Padding="5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <DataGrid Grid.Row="0" x:Name="dgMyHomeVisits" AutoGenerateColumns="False" IsReadOnly="True" GridLinesVisibility="All" BorderBrush="Gray" CanUserAddRows="False" RowHeight="30" FontSize="12" Margin="0,0,0,5" CanUserSortColumns="True" ToolTip="Список активных вызовов врача на дом.">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Врач" Binding="{Binding DoctorName}" Width="*"/>
+                            <DataGridTextColumn Header="Дата заявки" Binding="{Binding RequestDate, StringFormat='dd.MM.yyyy HH:mm'}" Width="*"/>
+                            <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="*"/>
+                            <DataGridTemplateColumn Header="Действия" Width="90">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Отменить" Width="80" Tag="{Binding VisitId}" Click="BtnCancelHomeVisit_Click" ToolTip="Отменить вызов"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button x:Name="btnShowArchiveVisits" Content="📂 Архив вызовов" Width="130" Height="32" Margin="5,0" Click="BtnShowArchiveVisits_Click" FontSize="13" Cursor="Hand" ToolTip="Просмотреть архив вызовов"/>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
+                <Button x:Name="btnExportToFile" Content="📄 Экспорт всех данных" MinWidth="190" Height="35" Margin="5,0" Click="BtnExportToFile_Click" FontSize="13" Cursor="Hand" ToolTip="Экспорт в CSV, Excel, TXT, JSON (Ctrl+S)"/>
+                <Button x:Name="btnEditUser" Content="✏️ Редактировать данные" MinWidth="190" Height="35" Margin="10" Click="BtnEditUser_Click" FontSize="13" Cursor="Hand" ToolTip="Изменить личные данные"/>
+                <Button x:Name="btnClose" Content="❌ Закрыть" MinWidth="100" Height="35" Margin="10" Click="BtnClose_Click" IsCancel="True" FontSize="13" Cursor="Hand" ToolTip="Закрыть окно (Esc)"/>
+            </StackPanel>
+        </Grid>
+    </DockPanel>
+</Window>

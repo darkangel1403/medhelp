@@ -1,0 +1,89 @@
+﻿<Window x:Class="MedHelp.Views.RegistryOfficeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MedHelp — Регистратура"
+        Height="800" Width="1100"
+        MinHeight="600" MinWidth="800"
+        WindowStartupLocation="CenterScreen"
+        UseLayoutRounding="True"
+        FontFamily="Segoe UI"
+        ResizeMode="CanResizeWithGrip"
+        PreviewKeyDown="Window_PreviewKeyDown">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0" Margin="0,0,0,15">
+            <MenuItem Header="_Файл">
+                <MenuItem x:Name="mnuExit" Header="Выход" Click="MnuExit_Click" InputGestureText="Alt+F4"/>
+            </MenuItem>
+            <MenuItem x:Name="mnuDirectories" Header="Справочники" Visibility="Collapsed">
+                <MenuItem x:Name="miPatients" Header="Пациенты" Click="MiPatients_Click"/>
+                <MenuItem x:Name="miDoctors" Header="Врачи" Click="MiDoctors_Click"/>
+                <MenuItem x:Name="miStatistics" Header="Статистика" Click="MiStatistics_Click"/>
+                <Separator/>
+            </MenuItem>
+            <MenuItem x:Name="mnuOperations" Header="Операции" Visibility="Collapsed">
+                <MenuItem x:Name="mnuRefreshSchedule" Header="🔄 Обновить расписание талонов" Click="MnuRefreshSchedule_Click" InputGestureText="F5"/>
+            </MenuItem>
+
+            <MenuItem Header="Журналы">
+                <MenuItem x:Name="mnuSpecialists" Header="Специалисты" Click="MnuSpecialists_Click"/>
+                <MenuItem x:Name="mnuCallHome" Header="Вызов на дом" Click="MnuCallHome_Click"/>
+            </MenuItem>
+            <MenuItem Header="Помощь">
+                <MenuItem Header="О программе" Click="MnuAboutProgram_Click" InputGestureText="F1"/>
+                <MenuItem Header="О разработчике" Click="MnuAboutDeveloper_Click" InputGestureText="F2"/>
+                <MenuItem Header="Справка" Click="MnuHelp_Click" InputGestureText="F3"/>
+            </MenuItem>
+        </Menu>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="welcomeTextBlock"
+                       Text="Добро пожаловать!"
+                       FontSize="26" FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,25"/>
+            <StackPanel Grid.Row="1"
+                        Orientation="Vertical"
+                        HorizontalAlignment="Center"
+                        Margin="0,0,0,25">
+                <Button x:Name="btnSpecialists" Content="⚕️ Специалисты" Click="BtnSpecialists_Click" MinWidth="300" Height="50" Margin="0,10" FontSize="16" Cursor="Hand" ToolTip="Выбрать врача"/>
+                <Button x:Name="btnCallHome" Content="🏠 Вызвать врача на дом" Click="BtnCallHome_Click" MinWidth="300" Height="50" Margin="0,10" FontSize="16" Cursor="Hand" ToolTip="Оформить вызов"/>
+                <Button x:Name="btnPersonalAccount" Content="👤 Личный кабинет" Click="BtnPersonalAccount_Click" MinWidth="300" Height="50" Margin="0,10" FontSize="16" Cursor="Hand" ToolTip="Мои записи"/>
+                <Separator Margin="0,25" Visibility="{Binding ElementName=btnAdminPanel, Path=Visibility}"/>
+                <StackPanel x:Name="btnAdminPanel" Orientation="Vertical" HorizontalAlignment="Center" Visibility="Collapsed">
+                    <TextBlock Text="Панель администратора" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,15" Foreground="#555555" FontSize="18"/>
+                    <WrapPanel HorizontalAlignment="Center">
+                        <Button x:Name="btnAddDoctor" Content="➕ Добавить врача" Click="BtnAddDoctor_Click" MinWidth="200" Height="40" Margin="5" FontSize="14" Cursor="Hand" Background="#E3F2FD" ToolTip="Добавить врача"/>
+                        <Button x:Name="btnEditDoctor" Content="✏️ Редактировать врача" Click="BtnEditDoctor_Click" MinWidth="200" Height="40" Margin="5" FontSize="14" Cursor="Hand" Background="#FFF3E0" ToolTip="Изменить врача"/>
+                        <Button x:Name="btnDeleteDoctor" Content="🗑️ Удалить врача" Click="BtnDeleteDoctor_Click" MinWidth="200" Height="40" Margin="5" FontSize="14" Cursor="Hand" Background="#FFEBEE" ToolTip="Удалить врача"/>
+                    </WrapPanel>
+                    <WrapPanel HorizontalAlignment="Center" Margin="0,15,0,0">
+                        <Button x:Name="btnAddPatient" Content="➕ Добавить пациента" Click="BtnAddPatient_Click" MinWidth="200" Height="40" Margin="5" FontSize="14" Cursor="Hand" Background="#E8F5E9" ToolTip="Добавить пациента"/>
+                        <Button x:Name="btnEditPatient" Content="✏️ Редактировать пациента" Click="BtnEditPatient_Click" MinWidth="200" Height="40" Margin="5" FontSize="14" Cursor="Hand" Background="#F3E5F5" ToolTip="Изменить пациента"/>
+                        <Button x:Name="btnDeletePatient" Content="🗑️ Удалить пациента" Click="BtnDeletePatient_Click" MinWidth="200" Height="40" Margin="5" FontSize="14" Cursor="Hand" Background="#FFEBEE" ToolTip="Удалить пациента"/>
+                    </WrapPanel>
+                </StackPanel>
+                <Button x:Name="btnLogout" Content="🚪 Выйти из аккаунта" Click="BtnLogout_Click" MinWidth="300" Height="50" Margin="0,25" FontSize="16" Cursor="Hand" Background="#FFEBEE" BorderBrush="#EF9A9A" ToolTip="Выход (Esc)"/>
+            </StackPanel>
+        </Grid>
+        <StatusBar Grid.Row="2">
+            <StatusBarItem>
+                <TextBlock x:Name="statusUser" Text="Пользователь: "/>
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock x:Name="statusRole" Text="Роль: "/>
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right">
+                <TextBlock x:Name="statusConnection" Text="Статус: Подключено" Foreground="Green"/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>
