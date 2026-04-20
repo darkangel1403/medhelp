@@ -1,0 +1,99 @@
+<Window x:Class="MedHelp.Views.RegistrationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MedHelp — Регистрация" Height="750" Width="600"
+        MinHeight="600" MinWidth="500"
+        WindowStartupLocation="CenterScreen" 
+        ResizeMode="CanResizeWithGrip"
+        FontFamily="Segoe UI">
+    <Grid Margin="25">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="Регистрация нового пользователя" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,25"/>
+        <Grid Grid.Row="1" Margin="0,0,0,15">
+            <Border BorderBrush="Gray" BorderThickness="1" Padding="10" CornerRadius="4">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="ФИО:" VerticalAlignment="Center" Padding="0" FontWeight="SemiBold"/>
+                    <TextBox x:Name="txtFullName" Grid.Column="1" BorderThickness="0" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="16" ToolTip="Введите ФИО (только русские буквы)"/>
+                </Grid>
+            </Border>
+        </Grid>
+        <Grid Grid.Row="2" Margin="0,0,0,15">
+            <Border BorderBrush="Gray" BorderThickness="1" Padding="10" CornerRadius="4">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Логин:" VerticalAlignment="Center" Padding="0" FontWeight="SemiBold"/>
+                    <TextBox x:Name="txtLogin" Grid.Column="1" BorderThickness="0" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="16" ToolTip="Придумайте логин (только латинские буквы и цифры)"/>
+                </Grid>
+            </Border>
+        </Grid>
+        <Grid Grid.Row="3" Margin="0,0,0,15">
+            <Border BorderBrush="Gray" BorderThickness="1" Padding="10" CornerRadius="4">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Телефон:" VerticalAlignment="Center" Padding="0" FontWeight="SemiBold"/>
+                    <TextBox x:Name="txtPhone" Grid.Column="1" BorderThickness="0" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="16" ToolTip="Введите телефон (только + и цифры)"/>
+                </Grid>
+            </Border>
+        </Grid>
+        <Grid Grid.Row="4" Margin="0,0,0,15">
+            <Border BorderBrush="Gray" BorderThickness="1" Padding="10" CornerRadius="4">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Адрес:" VerticalAlignment="Center" Padding="0" FontWeight="SemiBold"/>
+                    <TextBox x:Name="txtAddress" Grid.Column="1" BorderThickness="0" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="16" ToolTip="Введите адрес проживания"/>
+                </Grid>
+            </Border>
+        </Grid>
+        <Grid Grid.Row="5" Margin="0,0,0,15">
+            <Border BorderBrush="Gray" BorderThickness="1" Padding="10" CornerRadius="4">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Пароль:" VerticalAlignment="Center" Padding="0" FontWeight="SemiBold"/>
+                    <PasswordBox x:Name="pwdPassword" Grid.Column="1" BorderThickness="0" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="16" ToolTip="Придумайте пароль"/>
+                </Grid>
+            </Border>
+        </Grid>
+        <Grid Grid.Row="6" Margin="0,0,0,25">
+            <Border BorderBrush="Gray" BorderThickness="1" Padding="10" CornerRadius="4">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Повтор:" VerticalAlignment="Center" Padding="0" FontWeight="SemiBold"/>
+                    <PasswordBox x:Name="pwdConfirmPassword" Grid.Column="1" BorderThickness="0" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="16" ToolTip="Повторите пароль"/>
+                </Grid>
+            </Border>
+        </Grid>
+        <StackPanel Grid.Row="8" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button x:Name="btnRegister" Content="Зарегистрироваться" MinWidth="160" Height="40" Margin="0,0,15,0" Click="BtnRegister_Click" FontSize="16" IsDefault="True" ToolTip="Зарегистрировать (Enter)"/>
+            <Button x:Name="btnCancel" Content="Отмена" MinWidth="120" Height="40" Click="BtnCancel_Click" FontSize="16" IsCancel="True" Cursor="Hand" ToolTip="Отмена (Esc)"/>
+        </StackPanel>
+    </Grid>
+</Window>
