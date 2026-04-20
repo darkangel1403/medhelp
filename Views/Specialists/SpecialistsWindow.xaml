@@ -1,0 +1,70 @@
+﻿<Window x:Class="MedHelp.Views.SpecialistsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MedHelp — Специалисты" Height="600" Width="900"
+        MinHeight="500" MinWidth="700"
+        WindowStartupLocation="CenterOwner"
+        FontFamily="Segoe UI"
+        ResizeMode="CanResizeWithGrip">
+    <Window.InputBindings>
+        <KeyBinding Key="Escape" Command="{Binding CloseCommand}"/>
+        <KeyBinding Key="F" Modifiers="Control" Command="{Binding FocusSearchCommand}"/>
+    </Window.InputBindings>
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="Выберите врача" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,15"/>
+
+        <Grid Grid.Row="1" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="4" Padding="5">
+                <TextBox x:Name="txtSearch" FontSize="14" VerticalContentAlignment="Center" ToolTip="Поиск врача по ФИО (Ctrl+F)">
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="F" Modifiers="Control" Command="{Binding FocusSearchCommand}"/>
+                    </TextBox.InputBindings>
+                </TextBox>
+            </Border>
+            <Button Grid.Column="1" Content="🔍 Найти" MinWidth="80" Margin="5,0,0,0" Click="BtnSearch_Click" ToolTip="Выполнить поиск"/>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <GroupBox Grid.Column="0" Header="Специальности" Margin="0,0,10,0">
+                <ListBox x:Name="lstSpecialties" SelectionChanged="LstSpecialties_SelectionChanged" DisplayMemberPath="." FontSize="14"/>
+            </GroupBox>
+            <GroupBox Grid.Column="1" Header="Врачи">
+                <DataGrid x:Name="dgDoctors" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" MouseDoubleClick="DgDoctors_MouseDoubleClick" SelectionMode="Single" GridLinesVisibility="All" BorderBrush="Gray" AlternatingRowBackground="#F5F5F5" RowHeight="35" CanUserSortColumns="True">
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#E0E0E0"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="Padding" Value="5"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}" Width="*"/>
+                        <DataGridTextColumn Header="Специальность" Binding="{Binding Specialty}" Width="*"/>
+                        <DataGridTextColumn Header="Кабинет" Binding="{Binding CabinetNumber}" Width="80"/>
+                        <DataGridTextColumn Header="Стаж" Binding="{Binding ExperienceYears, StringFormat={}{0} лет}" Width="80"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
+        </Grid>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
+            <Button x:Name="btnDoctorDetails" Content="ℹ️ Подробнее" MinWidth="140" Height="35" Margin="5" Click="BtnDoctorDetails_Click" ToolTip="Информация о враче"/>
+            <Button x:Name="btnBookTicket" Content="📅 Заказать талон" MinWidth="140" Height="35" Margin="5" Click="BtnBookTicket_Click" ToolTip="Записаться на прием"/>
+            <Button x:Name="btnClose" Content="Закрыть" MinWidth="100" Height="35" Margin="5" IsCancel="True" Click="BtnClose_Click" ToolTip="Закрыть (Esc)"/>
+        </StackPanel>
+    </Grid>
+</Window>
