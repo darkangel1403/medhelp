@@ -1,0 +1,59 @@
+<Window x:Class="MedHelp.Views.AdminStatisticsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        Title="Статистика поликлиники" Height="600" Width="900"
+        MinHeight="500" MinWidth="700"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="CanResizeWithGrip"
+        FontFamily="Segoe UI">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="📊 Статистика записей и вызовов" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+        <TabControl Grid.Row="1">
+            <TabItem Header="Записи по специальностям">
+                <Grid Margin="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <lvc:CartesianChart Series="{Binding SpecialtySeries}" LegendLocation="Right" Margin="0,0,0,15">
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Количество записей" LabelFormatter="{Binding YFormatter}"/>
+                        </lvc:CartesianChart.AxisY>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Специальность" Labels="{Binding SpecialtyLabels}"/>
+                        </lvc:CartesianChart.AxisX>
+                    </lvc:CartesianChart>
+                    <TextBlock Grid.Row="1" Text="Данные отображают количество активных записей, сгруппированных по специальностям врачей." FontStyle="Italic" Foreground="Gray" HorizontalAlignment="Center"/>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Динамика вызовов на дом">
+                <Grid Margin="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <lvc:CartesianChart Series="{Binding VisitsSeries}" LegendLocation="Top" Margin="0,0,0,15">
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Дата" Labels="{Binding VisitLabels}"/>
+                        </lvc:CartesianChart.AxisX>
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Количество вызовов" LabelFormatter="{Binding YFormatter}"/>
+                        </lvc:CartesianChart.AxisY>
+                    </lvc:CartesianChart>
+                    <TextBlock Grid.Row="1" Text="График показывает количество заявок на вызов врача за последние 7 дней." FontStyle="Italic" Foreground="Gray" HorizontalAlignment="Center"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <Button Grid.Row="2" Content="Закрыть" Width="120" Height="35" HorizontalAlignment="Center" Margin="0,20,0,0" Click="BtnClose_Click" IsCancel="True" ToolTip="Закрыть окно (Esc)"/>
+    </Grid>
+</Window>
