@@ -1,0 +1,24 @@
+<Window x:Class="MedHelp.Views.MainMenuWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MedHelp" Height="450" Width="400"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        FontFamily="Segoe UI" FontSize="14">
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0,0,0,30">
+            <TextBlock Text="🏥 MedHelp" FontSize="28" FontWeight="Bold" HorizontalAlignment="Center" Foreground="#007ACC"/>
+            <TextBlock Text="Система учёта пациентов" FontSize="14" HorizontalAlignment="Center" Foreground="#777777" Margin="0,5,0,0"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button Content="Регистрация" Width="220" Height="45" Margin="0,0,0,15" Click="BtnRegister_Click" Cursor="Hand" Background="#007ACC" Foreground="White" BorderThickness="0"/>
+            <Button Content="Войти в систему" Width="220" Height="45" Margin="0,0,0,15" Click="BtnLogin_Click" Cursor="Hand" Background="#2196F3" Foreground="White" BorderThickness="0"/>
+            <Button Content="Выход" Width="220" Height="45" Margin="0,0,0,0" Click="BtnExit_Click" Cursor="Hand" Background="#EF5350" Foreground="White" BorderThickness="0"/>
+        </StackPanel>
+        <TextBlock Grid.Row="2" Text="Версия 1.1 © 2026" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#CCCCCC" FontSize="12" Margin="0,0,0,0"/>
+    </Grid>
+</Window>
