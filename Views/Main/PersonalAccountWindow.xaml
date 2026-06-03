@@ -1,0 +1,173 @@
+﻿<Window x:Class="MedHelp.Views.PersonalAccountWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Личный кабинет" 
+        Height="850" Width="1050"
+        MinHeight="700" MinWidth="900"
+        WindowStartupLocation="CenterScreen" 
+        ResizeMode="CanResizeWithGrip"
+        FontFamily="Segoe UI" 
+        FontSize="14"
+        PreviewKeyDown="Window_PreviewKeyDown">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" 
+                   Text="Личный кабинет" 
+                   FontSize="22" 
+                   FontWeight="Bold" 
+                   HorizontalAlignment="Center" 
+                   Margin="0,0,0,20"/>
+
+        <StackPanel Grid.Row="1" Margin="0,0,0,15">
+            <Border BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="4" Padding="10" Margin="0,0,0,6">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="ФИО:" FontWeight="SemiBold"/>
+                    <TextBlock x:Name="lblFullName" Grid.Column="1" VerticalAlignment="Center" Margin="8,0,0,0" TextWrapping="Wrap"/>
+                </Grid>
+            </Border>
+            <Border BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="4" Padding="10" Margin="0,0,0,6">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Логин:" FontWeight="SemiBold"/>
+                    <TextBlock x:Name="lblLogin" Grid.Column="1" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                </Grid>
+            </Border>
+            <Border BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="4" Padding="10" Margin="0,0,0,6">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Роль:" FontWeight="SemiBold"/>
+                    <TextBlock x:Name="lblRole" Grid.Column="1" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                </Grid>
+            </Border>
+            <Border BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="4" Padding="10" Margin="0,0,0,6">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Адрес:" FontWeight="SemiBold"/>
+                    <TextBlock x:Name="lblAddress" Grid.Column="1" VerticalAlignment="Center" Margin="8,0,0,0" TextWrapping="Wrap"/>
+                </Grid>
+            </Border>
+            <Border BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="4" Padding="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Телефон:" FontWeight="SemiBold"/>
+                    <TextBlock x:Name="lblPhone" Grid.Column="1" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                </Grid>
+            </Border>
+        </StackPanel>
+
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <GroupBox Grid.Row="0" Header="Мои записи на приём" Padding="10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+                        <DataGrid x:Name="dgMyAppointments" 
+                                  AutoGenerateColumns="False" 
+                                  IsReadOnly="True" 
+                                  GridLinesVisibility="Horizontal" 
+                                  BorderBrush="#E0E0E0" 
+                                  CanUserAddRows="False" 
+                                  RowHeight="35"
+                                  FontSize="13" 
+                                  CanUserSortColumns="True" 
+                                  AlternatingRowBackground="#FAFAFA">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Врач" Binding="{Binding DoctorName}" Width="*"/>
+                                <DataGridTextColumn Header="Специальность" Binding="{Binding Specialty}" Width="140"/>
+                                <DataGridTextColumn Header="Дата" Binding="{Binding VisitDate, StringFormat='dd.MM.yyyy HH:mm'}" Width="160"/>
+                                <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="110"/>
+                                <DataGridTemplateColumn Header="Действия" Width="180">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <Button Content="Отменить" Width="80" Margin="2" Tag="{Binding AppointmentId}" Click="BtnCancelAppointment_Click" Background="#FFEBEE" Foreground="#C62828" BorderThickness="0" Cursor="Hand"/>
+                                                <Button Content="Печать" Width="80" Margin="2" Tag="{Binding AppointmentId}" Click="BtnPrintTicket_Click" Background="#E3F2FD" Foreground="#1565C0" BorderThickness="0" Cursor="Hand"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </ScrollViewer>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
+                        <Button x:Name="btnShowAppointmentsArchive" Content="Архив талонов" Width="140" Height="35" Margin="0" Click="BtnShowAppointmentsArchive_Click" FontSize="13" Cursor="Hand" Background="#F5F5F5" Foreground="#333333" BorderThickness="0"/>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Grid.Row="2" Header="Вызовы на дом" Padding="10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+                        <DataGrid x:Name="dgMyHomeVisits" 
+                                  AutoGenerateColumns="False" 
+                                  IsReadOnly="True" 
+                                  GridLinesVisibility="Horizontal" 
+                                  BorderBrush="#E0E0E0" 
+                                  CanUserAddRows="False" 
+                                  RowHeight="35"
+                                  FontSize="13" 
+                                  CanUserSortColumns="True" 
+                                  AlternatingRowBackground="#FAFAFA">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Врач" Binding="{Binding DoctorName}" Width="*"/>
+                                <DataGridTextColumn Header="Дата заявки" Binding="{Binding RequestDate, StringFormat='dd.MM.yyyy HH:mm'}" Width="160"/>
+                                <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="110"/>
+                                <DataGridTextColumn Header="Жалобы" Binding="{Binding Complaints}" Width="*"/>
+                                <DataGridTemplateColumn Header="Действия" Width="100">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="Отменить" Width="90" Tag="{Binding VisitId}" Click="BtnCancelHomeVisit_Click" Background="#FFEBEE" Foreground="#C62828" BorderThickness="0" Cursor="Hand"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </ScrollViewer>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
+                        <Button x:Name="btnShowArchiveVisits" Content="Архив вызовов" Width="140" Height="35" Margin="0" Click="BtnShowArchiveVisits_Click" FontSize="13" Cursor="Hand" Background="#F5F5F5" Foreground="#333333" BorderThickness="0"/>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+        </Grid>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
+            <Button x:Name="btnExportToFile" Content="Экспорт данных (Ctrl+S)" MinWidth="200" Height="40" Margin="5" Click="BtnExportToFile_Click" FontSize="14" Cursor="Hand" Background="#007ACC" Foreground="White" BorderThickness="0"/>
+            <Button x:Name="btnEditUser" Content="Редактировать данные" MinWidth="200" Height="40" Margin="5" Click="BtnEditUser_Click" FontSize="14" Cursor="Hand" Background="#F5F5F5" Foreground="#333333" BorderThickness="0"/>
+            <Button x:Name="btnClose" Content="Закрыть" MinWidth="130" Height="40" Margin="5" Click="BtnClose_Click" IsCancel="True" FontSize="14" Cursor="Hand" Background="#F5F5F5" Foreground="#333333" BorderThickness="0"/>
+        </StackPanel>
+    </Grid>
+</Window>
