@@ -1,0 +1,41 @@
+﻿<Window x:Class="MedHelp.Views.AdminPatientsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Справочник пациентов" Height="650" Width="900"
+        MinHeight="500" MinWidth="700"
+        WindowStartupLocation="CenterOwner" ResizeMode="CanResizeWithGrip"
+        FontFamily="Segoe UI" FontSize="14">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="Список пациентов" FontSize="22" FontWeight="Bold" Margin="0,0,0,20"/>
+        <Border Grid.Row="1" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="4" Padding="10" Margin="0,0,0,15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="txtSearch" FontSize="15" VerticalContentAlignment="Center" Padding="5" ToolTip="Поиск по ФИО или логину"/>
+                <Button Grid.Column="1" Content="Найти" MinWidth="100" Height="40" Margin="10,0,0,0" Click="BtnSearch_Click" Background="#007ACC" Foreground="White" BorderThickness="0" Cursor="Hand" FontSize="14"/>
+            </Grid>
+        </Border>
+        <DataGrid Grid.Row="2" x:Name="dgUsers" AutoGenerateColumns="False" IsReadOnly="True" GridLinesVisibility="Horizontal" BorderBrush="#E0E0E0" RowHeight="40" FontSize="14" SelectionChanged="DgUsers_SelectionChanged" CanUserSortColumns="True" AlternatingRowBackground="#FAFAFA">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}" Width="*"/>
+                <DataGridTextColumn Header="Логин" Binding="{Binding Login}" Width="150"/>
+                <DataGridTextColumn Header="Роль" Binding="{Binding Role}" Width="100"/>
+                <DataGridTextColumn Header="Телефон" Binding="{Binding PhoneNumber}" Width="150"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+            <Button x:Name="btnAdd" Content="Добавить" MinWidth="140" Height="45" Margin="5" Click="BtnAdd_Click" Background="#007ACC" Foreground="White" BorderThickness="0" Cursor="Hand" FontSize="15"/>
+            <Button x:Name="btnEdit" Content="Изменить" MinWidth="140" Height="45" Margin="5" Click="BtnEdit_Click" IsEnabled="False" Background="#F5F5F5" Foreground="#333333" BorderThickness="0" Cursor="Hand" FontSize="15"/>
+            <Button x:Name="btnAction" Content="Удалить" MinWidth="140" Height="45" Margin="5" Click="BtnAction_Click" IsEnabled="False" Visibility="Collapsed" Background="#EF5350" Foreground="White" BorderThickness="0" Cursor="Hand" FontSize="15"/>
+            <Button Content="Закрыть" MinWidth="140" Height="45" Margin="5" Click="BtnClose_Click" IsCancel="True" Background="#F5F5F5" Foreground="#333333" BorderThickness="0" Cursor="Hand" FontSize="15"/>
+        </StackPanel>
+    </Grid>
+</Window>
