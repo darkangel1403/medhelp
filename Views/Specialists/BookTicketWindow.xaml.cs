@@ -1,0 +1,58 @@
+﻿using MedHelp.Data;
+using MedHelp.Models;
+using MedHelp.Services;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+
+namespace MedHelp.Views
+{
+    public partial class BookTicketWindow : Window
+    {
+        private readonly Doctor doctor = null!;
+        private Appointment? selectedTicket;
+
+        public BookTicketWindow(Doctor selectedDoctor)
+        {
+            if (selectedDoctor == null) { MessageBox.Show("Врач не выбран.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); Close(); return; }
+            doctor = selectedDoctor;
+            InitializeComponent();
+            lblDoctorName.Text = doctor.FullName;
+            dpDate.SelectedDateChanged += DpDate_SelectedDateChanged;
+            dpDate.SelectedDate = DateTime.Today;
+            Loaded += BookTicketWindow_Loaded;
+        }
+
+        private async void BookTicketWindow_Loaded(object sender, RoutedEventArgs e) { await LoadFreeTicketsAsync(DateTime.Today); }
+        private async void DpDate_SelectedDateChanged(object? sender, SelectionChangedEventArgs e) { if (dpDate.SelectedDate.HasValue) await LoadFreeTicketsAsync(dpDate.SelectedDate.Value); }
+        private async Task LoadFreeTicketsAsync(DateTime date)
+        {
+            try
+            {
+                dgFreeTickets.ItemsSource = null;
+                selectedTicket = null;
+                btnConfirmBooking.IsEnabled = false;
+                var tickets = await new DatabaseHelper().GetFreeTicketsAsync(doctor.DoctorId, date);
+                dgFreeTickets.ItemsSource = tickets.Where(t => t.VisitDate >= DateTime.Now.AddMinutes(10)).ToList();
+            }
+            catch (Exception ex) { MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); dgFreeTickets.ItemsSource = null; btnConfirmBooking.IsEnabled = false; }
+        }
+        private void DgFreeTickets_SelectionChanged(object sender, SelectionChangedEventArgs e) { selectedTicket = dgFreeTickets.SelectedItem as Appointment; btnConfirmBooking.IsEnabled = selectedTicket != null; }
+        private async void BtnConfirmBooking_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedTicket == null) { MessageBox.Show("Выберите талон.", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning); return; }
+            try
+            {
+                await new DatabaseHelper().BookAppointmentByIdAsync(selectedTicket.AppointmentId, SessionManager.CurrentUserId);
+                MessageBox.Show("Талон успешно заказан!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                DialogResult = true;
+                Close();
+            }
+            catch (InvalidOperationException ex) { MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
+            catch (Exception ex) { MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
+        }
+        private void BtnCancelBooking_Click(object sender, RoutedEventArgs e) { DialogResult = false; Close(); }
+    }
+}
